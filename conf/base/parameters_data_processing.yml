@@ -1,0 +1,7 @@
+google_books: https://norvig.com/google-books-common-words.txt
+english_words: https://raw.githubusercontent.com/kabrownlab/wordle/main/words.txt
+volumes: 4_541_627
+response_code: 200
+most_common_letters: etaoinsrhldcu
+word_freq_fill_null: 0
+word_length: 5

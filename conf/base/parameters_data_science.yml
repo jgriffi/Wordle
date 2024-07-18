@@ -1,0 +1,39 @@
+weighted: True
+k: 10
+number_of_tries: 6
+number_of_tries_alt_second_guess: 2
+word_col: words
+anagrams_col: anagrams
+num_combo: 2
+batch: 10
+mapping:
+  B: -1
+  Y: 0
+  G: 1
+num_words_to_simulate: 50
+raise_anagrams:
+  - raise
+  - arise
+  - serai
+  - aesir
+salet_anagrams:
+  - least
+  - steal
+  - slate
+  - stale
+  - stela
+  - tesla
+  - salet
+  - setal
+soare_anagrams:
+  - aeros
+  - arose
+  - soare
+trace_anagrams:
+  - trace
+  - react
+  - cater
+  - carte
+  - crate
+  - caret
+  - recta

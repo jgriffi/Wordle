@@ -1,0 +1,162 @@
+# google_books:
+#     filepath: data/01_raw/google_books.parquet
+#     type: pandas.ParquetDataset
+#     save_args:
+#         compression: GZIP
+#     metadata:
+#         kedro-viz:
+#             layer: raw
+#             preview_args:
+#                 nrows: 10
+
+
+custom_lemmas:
+    type: yaml.YAMLDataset
+    filepath: src/wordleproject/params/custom_lemmas.yml
+
+google_books:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/01_raw/google_books.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+english_words:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/01_raw/english_words.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+five_letter_words:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/02_intermediate/five_letter_words.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+five_letter_words_anagrams:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/02_intermediate/five_letter_words_anagrams.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+wordle_scoring_couples:
+    type: partitions.PartitionedDataset
+    path: data/02_intermediate/wordle_scoring_couples/
+    dataset:
+        type: polars.EagerPolarsDataset
+        file_format: parquet
+        load_args:
+            low_memory: True
+        save_args:
+            compression: gzip
+
+best_couples:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/02_intermediate/best_couples.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+wordle_scoring_singles:
+    type: partitions.PartitionedDataset
+    path: data/02_intermediate/wordle_scoring_singles/
+    dataset:
+        type: polars.EagerPolarsDataset
+        file_format: parquet
+        load_args:
+            low_memory: True
+        save_args:
+            compression: gzip
+
+best_singles:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/02_intermediate/best_singles.parquetclear
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+top_words:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/02_intermediate/top_words.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+wordle_openers:
+    type: yaml.YAMLDataset
+    filepath: conf/base/parameters_wordle_openers.yml
+
+simulating_openers:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/03_primary/simulating_openers.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+best_singles_from_best_couples:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/02_intermediate/best_singles_from_best_couples.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+best_opening_word_from_best_couples:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/02_intermediate/best_opening_word_from_best_couples.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+simulating_top_words:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/03_primary/simulating_top_words.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+simulating_alternative_openers:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/02_intermediate/simulating_alternative_openers.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+alternative_openers:
+    type: polars.EagerPolarsDataset
+    file_format: parquet
+    filepath: data/03_primary/alternative_openers.parquet
+    load_args:
+        low_memory: True
+    save_args:
+        compression: gzip
+
+
+
+
