@@ -1244,31 +1244,42 @@ def alternative_openers(
     k: int,
     num_tries: int,
     mapping: Dict[str, str],
-    five_letter_words: pl.DataFrame,
-    five_letter_words_anagrams: pl.DataFrame,
-    best_singles: pl.DataFrame,
-    simulating_alternative_openers: pl.DataFrame,
+    *dataframes: pl.DataFrame,
 ) -> pl.DataFrame:
     """
-    Simulate guesses for a word challenge.
+    Simulates alternative word openers for a word challenge game.
 
     Parameters:
     -----------
-        - weighted (bool): Whether to sample guesses weighted by word frequency.
-        - k (int): Number of words to consider in each simulation step.
-        - num_tries (int): Number of guesses allowed per challenge word.
-        - mapping (Dict[str, str]): Mapping for match patterns.
-        - five_letter_words (pl.DataFrame): DataFrame of five-letter words with frequencies.
-        - five_letter_words_anagrams (pl.DataFrame): A DataFrame containing five-letter words and their anagrams.
-        - best_singles (pl.DataFrame): DataFrame containing the best starting words.
-        - simulating_alternative_openers (pl.DataFrame): DataFrame containing the best alternative starting word pairs.
+        weighted (bool): If True, words are sampled weighted by frequency.
+        k (int): Number of words to consider after each guess.
+        num_tries (int): Number of tries allowed for each challenge word.
+        mapping (Dict[str, str]): Mapping of match pattern characters to numerical values.
+        *dataframes: A variable number of Polars DataFrames in the following order:
+            - five_letter_words: DataFrame containing words, frequencies, and lengths.
+            - five_letter_words_anagrams: DataFrame containing words and their anagrams.
+            - best_singles: DataFrame with the best initial guess word.
+            - simulating_alternative_openers: DataFrame used to find the best second guess.
 
     Returns:
-    --------
-        pl.DataFrame: Simulation results including guess details and patterns.
+        pl.DataFrame: A Polars DataFrame containing the results of the simulation.
+
+    Raises:
+        ValueError: If the number of provided DataFrames is not exactly 4.
     """
+
     data = []
 
+    # Unpack dataframes if the number of provided dataframes is known and fixed
+    if len(dataframes) == 4:  # expecting exactly 3 dataframes
+        (
+            five_letter_words,
+            five_letter_words_anagrams,
+            best_singles,
+            simulating_alternative_openers
+        ) = dataframes
+    else:
+        raise ValueError("Expected exactly 4 dataframes")
 
     # Get the best word
     best_word = (
