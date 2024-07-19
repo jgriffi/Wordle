@@ -24,7 +24,6 @@ for stopword in nltk_stop_words:
     nlp.vocab[stopword].is_stop = True
 
 
-
 def check_anagrams(dataf: pl.DataFrame) -> Dict[str, List[str]]:
     """
     Identify anagrams from a DataFrame and sort them by frequency. If words have the same frequency,

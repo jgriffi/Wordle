@@ -870,7 +870,6 @@ def simulating_top_words(
         five_letter_words
         .select(["words", "word_freq", "word_length"])
         .filter(pl.col("word_length") == word_length)
-        .with_columns(pl.col("word_freq") / pl.col("word_freq").sum())
         .sort("word_freq", descending=True)
     )
 
