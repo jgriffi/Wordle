@@ -18,7 +18,7 @@ Let's set the stage:
   - each anagram has the same overall information with respect to identifying the letters in the challenge word, however we do sacrifice some positional information
 
 ## Some findings
-### Best opening pair
+### [Best opening pair](notebooks/simulating_openers_eda.ipynb)
 
 The best pair of opening words are **`saint`** and **`loure`**. An example match pattern for the challenge word `hound` is shown below.
 
@@ -36,7 +36,7 @@ Over the **`9088`** challenge words:
 - greatest num of choices left after second guess - 81
 - avg num choices after 2nd guess - 15.68
 
-### Best opening word
+### [Best opening word](notebooks/simulating_top_words_eda.ipynb)
 
 An analysis of the best opening word was also undertaken. **`soare`** was identified as the best opener.
 
