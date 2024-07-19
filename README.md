@@ -42,10 +42,10 @@ An analysis of the best opening word was also undertaken. **`soare`** was identi
 
 ### Plots highlighting the anagrams of popular opening words
 
-raise - raise, arise, serai, aesir
-trace - trace, react, cater, carte, crate, caret, recta
-soare - aeros, arose, soare
-salet - least, steal, slate, stale, stela, tesla, salet, setal
+raise - raise, arise, serai, aesir  
+trace - trace, react, cater, carte, crate, caret, recta  
+soare - aeros, arose, soare  
+salet - least, steal, slate, stale, stela, tesla, salet, setal  
 
 ![Avg. letters identified vs Avg. tries](data/08_reporting/avg_letters_identified_vs_avg_tries.png)
 
