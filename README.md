@@ -4,7 +4,7 @@ Can we solve Wordle with simple heuristics?
 
 ## Overview
 
-A list if five letter words were compiled from [google books words](https://norvig.com/google-books-common-words.txt) and [english words](https://raw.githubusercontent.com/kabrownlab/wordle/main/words.txt).
+A list if five letter words was compiled from [google books words](https://norvig.com/google-books-common-words.txt) and [english words](https://raw.githubusercontent.com/kabrownlab/wordle/main/words.txt).
 
 Number of words: **`9088`**
 
