@@ -22,6 +22,12 @@ Let's set the stage:
 
 The best pair of opening words are **`saint`** and **`loure`**. An example match pattern for the challenge word `hound` is shown below.
 
+Difficulty:
+- easy: <= 2 tries
+- moderate: 3 <= tries < 5
+- hard: >= 5 tries
+- very hard: > 6 tries
+
 ![Example pattern match](data/08_reporting/example_pattern_match.png)
 
 Over the **`9088`** challenge words:
