@@ -1,6 +1,6 @@
 # projectwordle
 
-Can we solve Wordle with simple `heuristics`?
+Can we solve Wordle with simple heuristics?
 
 ## Overview
 
