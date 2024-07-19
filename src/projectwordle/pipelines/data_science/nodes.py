@@ -1262,9 +1262,11 @@ def alternative_openers(
             - simulating_alternative_openers: DataFrame used to find the best second guess.
 
     Returns:
+    --------
         pl.DataFrame: A Polars DataFrame containing the results of the simulation.
 
     Raises:
+    -------
         ValueError: If the number of provided DataFrames is not exactly 4.
     """
 
