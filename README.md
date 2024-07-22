@@ -12,7 +12,7 @@ Number of words: **`9088`**
 
 Let's set the stage:
 - only use words that has all the letters in most common letters - **`etaoinsrhldcu`**
-- use 2 opening guesses where there are no overlapping letters between the words
+- use 2 opening guesses where there are no overlapping letters between the words and neither word is plural
   - this gives 10 distinct letter guesses across both words
 - select the most frequently occurring anagram of each word
   - each anagram has the same overall information with respect to identifying the letters in the challenge word, however we do sacrifice some positional information
