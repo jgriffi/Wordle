@@ -116,26 +116,53 @@ def google_books_words(
                     has_header = False,
                 )
                 .rename({"column_1": "words", "column_2": "count"})
+                .with_columns(
+                    pl.col("words").str.strip_chars().str.to_lowercase(),
+                )
             )
 
             # Calculate the total count
             total_count = google_books.select(pl.col("count").sum()).item()
             
+            # google_books = (
+            #     google_books
+            #     .with_columns(
+            #         pl.col("words").str.to_lowercase().str.strip_chars(),
+            #         word_freq = ((pl.col("count") / num_volumes) / total_count).cast(pl.Float32), # https://aclanthology.org/P12-3029.pdf,
+            #         common_letters = (
+            #             pl.col("words")
+            #             .map_elements(lambda word: all(letter in most_common_letters for letter in word), return_dtype=pl.Boolean)
+            #         ),
+            #         word_length = (pl.col("words").str.len_chars()).cast(pl.UInt8),
+            #         has_repeat_letters = (
+            #             pl.col("words")
+            #             .map_elements(lambda word: len(set(word)) < len(word), return_dtype=pl.Boolean)
+            #         )
+            #     )  
+            # )
+
             google_books = (
                 google_books
                 .with_columns(
-                    pl.col("words").str.to_lowercase().str.strip_chars(),
                     word_freq = ((pl.col("count") / num_volumes) / total_count).cast(pl.Float32), # https://aclanthology.org/P12-3029.pdf,
-                    common_letters = (
-                        pl.col("words")
-                        .map_elements(lambda word: all(letter in most_common_letters for letter in word), return_dtype=pl.Boolean)
-                    ),
                     word_length = (pl.col("words").str.len_chars()).cast(pl.UInt8),
-                    has_repeat_letters = (
+                    num_common_letters=(
                         pl.col("words")
-                        .map_elements(lambda word: len(set(word)) < len(word), return_dtype=pl.Boolean)
-                    )
-                )  
+                        .str.split("")
+                        .list.eval(pl.element().is_in(list(most_common_letters)))
+                        .list.sum()
+                    ).cast(pl.UInt8),
+                    num_unique_letters=(
+                        pl.col("words")
+                        .str.split("")
+                        .list.unique()
+                        .list.len()
+                    ).cast(pl.UInt8),
+                )
+                .with_columns(
+                    common_letters=(pl.col("word_length") == pl.col("num_common_letters")),
+                    has_repeat_letters=(pl.col("word_length") != pl.col("num_unique_letters"))
+                ) 
             )
     except Exception as e:
         # Handle exceptions (e.g., network errors, invalid URLs, etc.)
@@ -200,18 +227,38 @@ def get_english_words(
                     right_on="words",
                     coalesce=True
                 )
+                # .with_columns(
+                #     pl.col("word_freq").fill_null(word_freq_fill_null),
+                #     common_letters=(
+                #         pl.col("words")
+                #         .map_elements(lambda word: all(letter in most_common_letters for letter in word), return_dtype=pl.Boolean)
+                #     ),
+                #     word_length=(pl.col("words").str.len_chars()).cast(pl.UInt8),
+                #     has_repeat_letters=(
+                #         pl.col("words")
+                #         .map_elements(lambda word: len(set(word)) < len(word), return_dtype=pl.Boolean)
+                #     )
+                # )
                 .with_columns(
                     pl.col("word_freq").fill_null(word_freq_fill_null),
-                    common_letters=(
+                    word_length = (pl.col("words").str.len_chars()).cast(pl.UInt8),
+                    num_common_letters=(
                         pl.col("words")
-                        .map_elements(lambda word: all(letter in most_common_letters for letter in word), return_dtype=pl.Boolean)
-                    ),
-                    word_length=(pl.col("words").str.len_chars()).cast(pl.UInt8),
-                    has_repeat_letters=(
+                        .str.split("")
+                        .list.eval(pl.element().is_in(list(most_common_letters)))
+                        .list.sum()
+                    ).cast(pl.UInt8),
+                    num_unique_letters=(
                         pl.col("words")
-                        .map_elements(lambda word: len(set(word)) < len(word), return_dtype=pl.Boolean)
-                    )
+                        .str.split("")
+                        .list.unique()
+                        .list.len()
+                    ).cast(pl.UInt8),
                 )
+                .with_columns(
+                    common_letters=(pl.col("word_length") == pl.col("num_common_letters")),
+                    has_repeat_letters=(pl.col("word_length") != pl.col("num_unique_letters"))
+                ) 
             )
     except Exception as e:
         # Handle exceptions (e.g., network errors, invalid URLs, etc.)

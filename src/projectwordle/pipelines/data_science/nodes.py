@@ -575,6 +575,11 @@ def simulating_openers(
             remaining_words = sorted_five_letter_words.filter(~(pl.col("words").is_in(encountered_guesses))).to_pandas()
             # remaining_words = sorted_five_letter_words.filter(~(pl.col("words").is_in(words_to_filter_out))).to_pandas()
 
+            # return a weighted sample of k possibilities
+            num_choices_after_guess = len(remaining_words)
+            if num_choices_after_guess < k:
+                k = num_choices_after_guess
+
             if weighted:
                 try:
                     # Sample words weighted by frequency
@@ -584,7 +589,7 @@ def simulating_openers(
             else:
                 filtered_words = remaining_words.head(k)["words"]
 
-            num_choices_after_guess = len(remaining_words)
+            # num_choices_after_guess = len(remaining_words)
 
             encountered_guesses.add(current_guess)
 
@@ -926,6 +931,11 @@ def simulating_top_words(
                 
                 # Filter remaining possible words, excluding encountered guesses
                 remaining_words = five_letter_words.filter(~(pl.col("words").is_in(encountered_guesses))).to_pandas()
+
+                # return a weighted sample of k possibilities
+                num_choices_after_guess = len(remaining_words)
+                if num_choices_after_guess < k:
+                    k = num_choices_after_guess
                 
                 if weighted:
                     try:
@@ -942,7 +952,7 @@ def simulating_top_words(
                 else:
                     filtered_words = remaining_words.head(k)["words"]
 
-                num_choices_after_guess = len(remaining_words)
+                # num_choices_after_guess = len(remaining_words)
 
                 encountered_guesses.add(current_guess)
 
